@@ -20,14 +20,32 @@ def predict():
     data = request.get_json()
     input_data = np.array(data['input']).reshape(1, -1)
 
+    if input_data.shape[1] < 297:
+        padding = np.zeros((1, 297 - input_data.shape[1]))
+        input_data = np.concatenate([input_data, padding], axis=1)
+
+    # Make sure the input data has the correct data type
+    input_data = input_data.astype(np.float32)
+
     # Make prediction using the simple model
     simple_pred = simple_model.predict(input_data)
     optimized_pred = optimized_model.predict(input_data)
 
+    threshold = 0.5
+    optimized_class = 1 if optimized_pred[0] >= threshold else 0
+    simple_class = 1 if simple_pred[0] >= threshold else 0
+
     return jsonify({
-        'simple_model_prediction': simple_pred[0].tolist(),
-        'optimized_model_prediction': optimized_pred[0].tolist()
+        'simple_model_prediction': {
+            'probability': simple_pred[0].tolist(),
+            'class': simple_class
+        },
+        'optimized_model_prediction': {
+            'probability': optimized_pred[0].tolist(),
+            'class': optimized_class
+        }
     })
+
 
 if __name__ == '__main__':
     app.run(debug=True)

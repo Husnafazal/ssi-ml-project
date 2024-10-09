@@ -6,9 +6,10 @@ from sklearn.preprocessing import OneHotEncoder
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.optimizers import SGD, Adam
+import pathlib
 
 # Load the dataset
-ssi_data = pd.read_csv(r'C:\Users\Lenovo\ssi-ml-project\data\SSI Data.csv')
+ssi_data = pd.read_csv(pathlib.Path(__name__).resolve().parent /'data/SSI Data.csv')
 
 # One-hot encode categorical columns
 object_columns = ssi_data.select_dtypes(include=['object']).columns
