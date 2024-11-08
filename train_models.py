@@ -4,12 +4,12 @@ import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.optimizers import SGD, Adam
 import pathlib
 
 # Load the dataset
-ssi_data = pd.read_csv(pathlib.Path(__name__).resolve().parent /'data/SSI Data.csv')
+ssi_data = pd.read_csv(pathlib.Path(__name__).resolve().parent / 'data/SSI Data 2.csv')
 
 # One-hot encode categorical columns
 object_columns = ssi_data.select_dtypes(include=['object']).columns
@@ -33,7 +33,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # Define a function to create and train models with different optimizers
 def train_and_evaluate_model(optimizer, model_name):
     model = Sequential([
-        Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
+        Input(shape=(X_train.shape[1],)),  # Use Input layer for defining the input shape
+        Dense(64, activation='relu'),
         Dense(1, activation='sigmoid')  # Output layer for binary classification
     ])
 
@@ -42,8 +43,8 @@ def train_and_evaluate_model(optimizer, model_name):
     # Train the model
     model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2, verbose=0)
 
-    # Save the model
-    save_path = f'saved_models/{model_name}.h5'
+    # Save the model in the new .keras format
+    save_path = f'saved_models/{model_name}.keras'
     model.save(save_path)
     print(f'Model saved to {save_path}')
 

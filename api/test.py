@@ -56,23 +56,30 @@ def format_prediction(class_prediction, probability):
 # Route for prediction
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Get the input data from the request
-    data = request.get_json()
-    input_data = np.array(data['input']).reshape(1, -1)
+    data_input = request.get_json()
 
-    # Check if input_data has fewer than 297 features, pad if necessary
-    if input_data.shape[1] < 297:
-        padding = np.zeros((1, 297 - input_data.shape[1]))
-        input_data = np.concatenate([input_data, padding], axis=1)
+    # Ensure the input is valid
+    if 'id' not in data_input:
+        return jsonify({"error": "ID is required"}), 400
 
-    # Make sure the input data has the correct data type
-    input_data = input_data.astype(np.float32)
+    id_number = data_input['id']
+    feature_values = get_feature_values_by_id(id_number)
 
-    # Make prediction using the model
+    if feature_values is None:
+        return jsonify({"error": "ID not found"}), 404
+
+    # Preprocess the feature values
+    input_data = preprocess_input(feature_values)
+
+    # Debugging: Print input data shape and type
+    print("Input data for prediction:", input_data)
+    print("Input data shape:", input_data.shape)
+
+    # Make predictions using both models
     simple_pred = simple_model.predict(input_data)
     optimized_pred = optimized_model.predict(input_data)
 
-       # Formatting predictions
+    # Formatting predictions
     simple_prediction = format_prediction(np.round(simple_pred[0]).astype(int), simple_pred)
     optimized_prediction = format_prediction(np.round(optimized_pred[0]).astype(int), optimized_pred)
 
