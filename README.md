@@ -92,8 +92,11 @@ The response includes predictions from both the simple and optimized models. Her
 Interpreting Results
 Class: "At Risk of SSI" or "Not at Risk of SSI", indicating the model’s prediction.
 Probability: A confidence score from 0 to 1, with values closer to 1 indicating higher confidence.
+
+
 Deployment Plan
 This API is currently set up for local deployment and testing. For broader deployment, consider hosting on a cloud platform to provide public access and allow integration with other applications.
+
 
 Run the API on your local machine as described in the Setup and Installation section.
 Use Postman to send requests and view model predictions.
