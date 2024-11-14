@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Surgical Site Infection (SSI) Prediction API
 
 This project is a machine learning-based API designed to predict the likelihood of Surgical Site Infection (SSI) in patients. It uses a Flask API to expose a trained model, providing real-time predictions based on patient data inputs. This tool aims to help healthcare professionals assess SSI risk effectively.
@@ -13,6 +14,22 @@ This project is a machine learning-based API designed to predict the likelihood 
 ## Project Structure
 
 ```plaintext
+=======
+SSI Prediction API
+
+This project is a machine learning-based API that predicts the likelihood of Surgical Site Infection (SSI) in patients. It uses a Flask API to expose a trained model for real-time inference. The API allows users to input a patient's data and receive predictions on whether they are at risk of SSI.
+
+Project Overview
+
+Purpose: Provide healthcare professionals with a tool to assess the risk of SSI using trained machine learning models.
+Models Used: Two neural network models:
+simple_model: A straightforward neural network.
+optimized_model: An enhanced neural network with improved accuracy.
+Deployment: The API is deployed locally and can be accessed via Postman for testing.
+Project Structure
+graphql
+Copy code
+>>>>>>> e71d797e3417b59b71f865632012601f32b419a2
 ssi-ml-project/
 ├── api/                              # API setup and routes
 │   └── app.py                        # Flask API code for predictions
@@ -93,3 +110,9 @@ Probability: A confidence score from 0 to 1, with values closer to 1 indicating 
 Deployment Plan
 This API is currently set up for local deployment and testing. For broader deployment, consider hosting on a cloud platform to provide public access and allow integration with other applications.
 
+<<<<<<< HEAD
+=======
+Run the API on your local machine as described in the Setup and Installation section.
+Use Postman to send requests and view model predictions.
+In the future, the API could be deployed to a cloud hosting platform for remote access and integration with other applications.
+>>>>>>> e71d797e3417b59b71f865632012601f32b419a2
