@@ -14,6 +14,8 @@ simple_model: A straightforward neural network.
 optimized_model: An enhanced neural network with improved accuracy.
 Deployment: The API is deployed locally and can be accessed via Postman for testing.
 Project Structure
+```plaintext
+
 
 ssi-ml-project/
 ├── api/                              # API setup and routes
