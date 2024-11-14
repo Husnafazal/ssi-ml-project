@@ -1,108 +1,82 @@
-SSI Prediction API
-This project is a machine learning-based API that predicts the likelihood of Surgical Site Infection (SSI) in patients. It uses a Flask API to expose a trained model for real-time inference. The API allows users to input a patient's data and receive predictions on whether they are at risk of SSI.
+# Surgical Site Infection (SSI) Prediction API
 
-Project Overview
-Purpose: Provide healthcare professionals with a tool to assess the risk of SSI using trained machine learning models.
-Models Used: Two neural network models:
-simple_model: A straightforward neural network.
-optimized_model: An enhanced neural network with improved accuracy.
-Deployment: The API is deployed locally and can be accessed via Postman for testing.
-Project Structure
-graphql
-Copy code
+This project is a machine learning-based API designed to predict the likelihood of Surgical Site Infection (SSI) in patients. It uses a Flask API to expose a trained model, providing real-time predictions based on patient data inputs. This tool aims to help healthcare professionals assess SSI risk effectively.
+
+## Project Overview
+
+- **Purpose**: Provides healthcare professionals with a tool to assess SSI risk in patients.
+- **Models**: Utilizes two neural network models:
+  - `simple_model` (basic model)
+  - `optimized_model` (optimized for improved accuracy)
+- **Deployment**: Set up for local testing via Postman.
+
+## Project Structure
+
+```plaintext
 ssi-ml-project/
-├── api/                              # Folder for the API setup and routes
-│   └── app.py                        # Main Flask API code for predictions
+├── api/                              # API setup and routes
+│   └── app.py                        # Flask API code for predictions
 ├── saved_models/                     # Directory for saved models
 │   ├── simple_nn_model.h5            # Trained simple neural network model
 │   └── optimized_nn_model.h5         # Trained optimized neural network model
 ├── data/
-│   └── SSI Data 2.csv                # Patient data for reference
+│   └── SSI Data 2.csv                # Dataset for reference
 ├── .venv/                            # Virtual environment directory
 └── README.md                         # Project documentation
-Setup and Installation
-1. Clone the Repository
-Clone this project to your local machine:
 
-bash
-Copy code
-git clone <https://github.com/Husnafazal/ssi-ml-project>
+Setup and Installation
+
+1. Clone the Repository
+git clone https://github.com/Husnafazal/ssi-ml-project
 cd ssi-ml-project
 2. Set Up the Virtual Environment
-Create and activate a virtual environment to manage dependencies:
-
-bash
-Copy code
+Create and activate a virtual environment to manage dependencies.
 python -m venv .venv
 source .venv/bin/activate  # On macOS/Linux
 # OR
 .venv\Scripts\activate     # On Windows
 3. Install Requirements
-Install the required Python packages:
-
-bash
-Copy code
+Install the required Python packages.
 pip install -r requirements.txt
 4. Prepare the Dataset
-Ensure the SSI Data 2.csv file is available in the data/ folder, as this is used for feature retrieval and one-hot encoding.
-
+Ensure the SSI Data 2.csv file is available in the data/ folder. This file is essential for feature retrieval and input formatting
 5. Run the API
-Start the Flask API server:
-
-bash
-Copy code
+Start the Flask API server.
 flask --app api/app run
 The API will be accessible at http://127.0.0.1:5000.
-
 Using the API with Postman
-The API accepts POST requests to provide predictions. You can use Postman to send requests and retrieve predictions from the models.
+The API can be accessed by sending a POST request through Postman.
 
-Structuring Input Data for Predictions
-The input values in the JSON request represent the features that the model expects to receive. Each value must align with the data structure and preprocessing used during model training.
+Endpoint for Prediction
+URL: http://127.0.0.1:5000/predict
+Method: POST
+Content-Type: JSON
 
-Understanding the Input Features
-Feature Representation: Each value in the input array represents a specific feature from the original dataset, and they must be in the correct order.
-
-Example: If your dataset included features such as age, blood pressure, and cholesterol level, an example input might look like this:
-
-json
-Copy code
+Request Body Format
+The API expects input data in the form of patient features, represented as an array of values. These values should be ordered to match the features used during model training. Below is an example:
 {
-    "input": [12, 120, 180]
+  "input": [12, 23, 78]
 }
-12: represents age
-120: represents blood pressure
-180: represents cholesterol level
-Replace these values with the actual patient data in the correct order and with any necessary transformations applied.
+Understanding the Input Format
+Each value in the input array corresponds to specific patient features used by the model. For example:
 
-Preprocessing Steps: Make sure that input values reflect any transformations applied during training. For example, if you used one-hot encoding, scaling, or normalization, the input values should reflect these modifications.
+12 could represent age
+23 could represent blood pressure
+78 could represent cholesterol level
+Ensure that the number of values and their order match the feature set used for training.
 
-Matching Feature Count: Ensure the input array has the same number of features as the model expects. If the model was trained with 297 features, the input array should contain exactly 297 values.
+Example Postman Request
+Open Postman and create a new POST request.
 
-Example Input for Multiple Features
-For a model trained with additional features, an input array might look like this:
+Set the URL to http://127.0.0.1:5000/predict.
 
-json
-Copy code
+In the Body section of Postman, select raw, choose JSON, and enter the patient data:
 {
-    "input": [12, 120, 180, 1, 0, 25, ...]  // Total 297 values
+  "input": [12, 23, 78]
 }
-Sending a Request in Postman
-URL: Set up a new POST request to http://127.0.0.1:5000/predict.
-
-Request Body: In the Body section of Postman, select raw, choose JSON, and enter the following example input structure:
-
-json
-Copy code
-{
-  "input": [12, 120, 180]
-}
-Send the Request: Click "Send" in Postman.
-
-Response: The response will include predictions from both models. Example response:
-
-json
-Copy code
+Click "Send" to send the request.
+Example Response
+The response includes predictions from both the simple and optimized models. Here is an example output:
 {
   "optimized_model_prediction": {
     "class": "At Risk of SSI",
@@ -114,11 +88,8 @@ Copy code
   }
 }
 Interpreting Results
-Class: "At Risk of SSI" or "Not at Risk of SSI" to indicate the model’s prediction.
-Probability: A confidence score from 0 to 1, with values closer to 1 indicating higher confidence in the prediction.
+Class: "At Risk of SSI" or "Not at Risk of SSI", indicating the model’s prediction.
+Probability: A confidence score from 0 to 1, with values closer to 1 indicating higher confidence.
 Deployment Plan
-This API is currently set up for local deployment and testing using Postman.
+This API is currently set up for local deployment and testing. For broader deployment, consider hosting on a cloud platform to provide public access and allow integration with other applications.
 
-Run the API on your local machine as described in the Setup and Installation section.
-Use Postman to send requests and view model predictions.
-In the future, the API could be deployed to a cloud hosting platform for remote access and integration with other applications.
