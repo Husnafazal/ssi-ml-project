@@ -1,15 +1,4 @@
-<<<<<<< HEAD
-# Surgical Site Infection (SSI) Prediction API
 
-This project is a machine learning-based API designed to predict the likelihood of Surgical Site Infection (SSI) in patients. It uses a Flask API to expose a trained model, providing real-time predictions based on patient data inputs. This tool aims to help healthcare professionals assess SSI risk effectively.
-
-## Project Overview
-
-- **Purpose**: Provides healthcare professionals with a tool to assess SSI risk in patients.
-- **Models**: Utilizes two neural network models:
-  - `simple_model` (basic model)
-  - `optimized_model` (optimized for improved accuracy)
-- **Deployment**: Set up for local testing via Postman.
 
 ## Project Structure
 
