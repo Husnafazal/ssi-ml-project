@@ -117,3 +117,5 @@ This is a Flask application deployed on an AWS EC2 instance, accessible at: http
 
 Run the API on your local machine as described in the Setup and Installation section.
 Use Postman to send requests and view model predictions.
+
+https://drive.google.com/file/d/1MJF-TXvN43ER_2VFTOHcD2xVK_wV7Lwz/view?usp=drive_link
