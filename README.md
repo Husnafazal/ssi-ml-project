@@ -100,7 +100,7 @@ Deployment Plan
 http://13.233.46.164:8000/predict
 # Flask App on AWS EC2
 
-This is a Flask application deployed on an AWS EC2 instance, accessible at: **[http://13.233.46.164:8000/predict](http://13.233.46.164:8000/predict)**
+This is a Flask application deployed on an AWS EC2 instance, accessible at: http://13.233.46.164:8000/predict
 
 ## Deployment Steps
 1. Launch an Ubuntu EC2 instance, open ports 22 and 8000.
