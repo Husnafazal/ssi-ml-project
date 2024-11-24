@@ -1,3 +1,4 @@
+from pathlib import Path
 from flask import Flask, request, jsonify
 import pandas as pd
 import numpy as np
@@ -7,11 +8,14 @@ from sklearn.preprocessing import OneHotEncoder
 app = Flask(__name__)
 
 # Load the saved models
-simple_model = load_model('saved_models/simple_nn_model.h5')
-optimized_model = load_model('saved_models/optimized_nn_model.h5')
+simple_model_path = Path(__file__).parent.parent / "saved_models/simple_nn_model.keras"
+optimized_model_path = Path(__file__).parent.parent / "saved_models/optimized_nn_model.keras"
+simple_model = load_model(simple_model_path)
+optimized_model = load_model(optimized_model_path)
 
 # Load the dataset
-data = pd.read_csv('../data/SSI Data 2.csv')
+csv_file = Path(__file__).parent.parent / "data/SSI Data.csv"
+data = pd.read_csv(csv_file)
 
 # Initialize the encoder for categorical features
 encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')

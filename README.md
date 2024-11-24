@@ -21,10 +21,10 @@ ssi-ml-project/
 ├── api/                              # API setup and routes
 │   └── app.py                        # Flask API code for predictions
 ├── saved_models/                     # Directory for saved models
-│   ├── simple_nn_model.h5            # Trained simple neural network model
-│   └── optimized_nn_model.h5         # Trained optimized neural network model
+│   ├── simple_nn_model.keras         # Trained simple neural network model
+│   └── optimized_nn_model.keras      # Trained optimized neural network model
 ├── data/
-│   └── SSI Data 2.csv                # Dataset for reference
+│   └── SSI Data.csv                  # Dataset for reference
 ├── .venv/                            # Virtual environment directory
 └── README.md                         # Project documentation
 
@@ -43,7 +43,7 @@ source .venv/bin/activate  # On macOS/Linux
 Install the required Python packages.
 pip install -r requirements.txt
 4. Prepare the Dataset
-Ensure the SSI Data 2.csv file is available in the data/ folder. This file is essential for feature retrieval and input formatting
+Ensure the SSI Data.csv file is available in the data/ folder. This file is essential for feature retrieval and input formatting
 5. Run the API
 Start the Flask API server.
 flask --app api/app run
@@ -82,14 +82,14 @@ Click "Send" to send the request.
 Example Response
 The response includes predictions from both the simple and optimized models. Here is an example output:
 {
-  "optimized_model_prediction": {
-    "class": "At Risk of SSI",
-    "probability": 0.87
-  },
-  "simple_model_prediction": {
-    "class": "Not at Risk of SSI",
-    "probability": 0.35
-  }
+    "optimized_model_prediction": {
+        "class": "Not at Risk of SSI",
+        "probability": 0.0011039716191589832
+    },
+    "simple_model_prediction": {
+        "class": "Not at Risk of SSI",
+        "probability": 0.4138723313808441
+    }
 }
 Interpreting Results
 Class: "At Risk of SSI" or "Not at Risk of SSI", indicating the model’s prediction.
@@ -97,9 +97,23 @@ Probability: A confidence score from 0 to 1, with values closer to 1 indicating 
 
 
 Deployment Plan
-This API is currently set up for local deployment and testing. For broader deployment, consider hosting on a cloud platform to provide public access and allow integration with other applications.
+http://13.233.46.164:8000/predict
+# Flask App on AWS EC2
 
+This is a Flask application deployed on an AWS EC2 instance, accessible at: **[http://13.233.46.164:8000/predict](http://13.233.46.164:8000/predict)**
+
+## Deployment Steps
+1. Launch an Ubuntu EC2 instance, open ports 22 and 8000.
+2. Install dependencies: `sudo apt update && sudo apt install python3 python3-pip git -y`
+3. Clone the repository: `git clone <repository-url> && cd <repository-folder>`
+4. Set up environment: `python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt`
+5. Start the app: `gunicorn --bind 0.0.0.0:8000 app:app`
+
+## Usage
+- **Endpoint:** `/predict`
+- **Method:** POST
+- **Input:** JSON payload
+- **Response:** Prediction results in JSON format
 
 Run the API on your local machine as described in the Setup and Installation section.
 Use Postman to send requests and view model predictions.
-In the future, the API could be deployed to a cloud hosting platform for remote access and integration with other applications.
